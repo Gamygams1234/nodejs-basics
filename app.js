@@ -1,21 +1,33 @@
 const express = require("express");
 
+const morgan = require("morgan");
 // express app
 const app = express();
 
+// register view view engine
+
+app.set("view engine", "ejs");
 // listen for requests
 app.listen(3000);
 
-// register view view engine
-// the default is going to be the views folder
-app.set("view engine", "ejs");
-
 // this would be if we wanted to change the views folder
-//app.set("views", "myviews")
+app.use(express.static("public"));
 
-// app.get("/", (req, res) => {
-//   res.render("index");
-// });
+app.use((req, res, next) => {
+  console.log("new request made:");
+  console.log("host: ", req.hostname);
+  console.log("path: ", req.path);
+  console.log("method: ", req.method);
+  // this will tell it to move on
+  next();
+});
+
+app.use((req, res, next) => {
+  console.log("in the next middleware");
+  next();
+});
+
+// this will dictate what is logged to the console
 
 app.get("/", (req, res) => {
   const blogs = [
