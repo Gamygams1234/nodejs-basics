@@ -3,7 +3,8 @@ const http = require("http");
 
 // the server is stored
 const server = http.createServer((req, res) => {
-  console.log("request made");
+  // this will show the path, and the method
+  console.log(req.url, req.method);
 });
 
 // localhost is the default value for 2nd argument
