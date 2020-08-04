@@ -1,0 +1,23 @@
+{
+  "name": "node-crash",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gamygams1234/nodejs-basics.git"
+  },
+  "author": "gamyburgos <gamyburgos@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gamygams1234/nodejs-basics/issues"
+  },
+  "homepage": "https://github.com/Gamygams1234/nodejs-basics#readme",
+  "dependencies": {
+    "lodash": "^4.17.19"
+  }
+}
