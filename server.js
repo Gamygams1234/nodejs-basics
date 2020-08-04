@@ -1,20 +1,47 @@
 // starting the HTTP module
 const http = require("http");
 
-// the server is stored
+const fs = require("fs");
+
 const server = http.createServer((req, res) => {
-  // this will show the path, and the method
+  // console.log(req);
   console.log(req.url);
 
   // set header content type
-
-  // this will deliver the plain text
-
-  // this will deliver in html form
-  // res.setHeader("Content-Type", "text/plain");
   res.setHeader("Content-Type", "text/html");
-  res.write("<h1>Hello world</h1>");
-  res.end();
+
+  // routing
+  let path = "./views/";
+  switch (req.url) {
+    case "/":
+      path += "index.html";
+      res.statusCode = 200;
+      break;
+    case "/about":
+      path += "about.html";
+      res.statusCode = 200;
+      break;
+    case "/about-us":
+      // this will redirect because it is part of the 300 error
+      res.statusCode = 301;
+      res.setHeader("Location", "/about");
+      res.end();
+      break;
+    default:
+      path += "404.html";
+      res.statusCode = 404;
+  }
+
+  // send html
+  // this will log the error if there is one or not
+  fs.readFile(path, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.end();
+    }
+    //res.write(data);
+    res.end(data);
+  });
 });
 
 // localhost is the default value for 2nd argument
