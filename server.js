@@ -1,58 +1,58 @@
-// starting the HTTP module
-const http = require("http");
+// // starting the HTTP module
+// const http = require("http");
 
-const fs = require("fs");
-const _ = require("lodash");
+// const fs = require("fs");
+// const _ = require("lodash");
 
-const server = http.createServer((req, res) => {
-  // lodash
-  const num = _.random(0, 20);
-  console.log(num);
+// const server = http.createServer((req, res) => {
+//   // lodash
+//   const num = _.random(0, 20);
+//   console.log(num);
 
-  // only puts it once
-  const greet = _.once(() => {
-    console.log("hello");
-  });
-  greet();
-  greet();
-  // set header content type
-  res.setHeader("Content-Type", "text/html");
+//   // only puts it once
+//   const greet = _.once(() => {
+//     console.log("hello");
+//   });
+//   greet();
+//   greet();
+//   // set header content type
+//   res.setHeader("Content-Type", "text/html");
 
-  // routing
-  let path = "./views/";
-  switch (req.url) {
-    case "/":
-      path += "index.html";
-      res.statusCode = 200;
-      break;
-    case "/about":
-      path += "about.html";
-      res.statusCode = 200;
-      break;
-    case "/about-us":
-      // this will redirect because it is part of the 300 error
-      res.statusCode = 301;
-      res.setHeader("Location", "/about");
-      res.end();
-      break;
-    default:
-      path += "404.html";
-      res.statusCode = 404;
-  }
+//   // routing
+//   let path = "./views/";
+//   switch (req.url) {
+//     case "/":
+//       path += "index.html";
+//       res.statusCode = 200;
+//       break;
+//     case "/about":
+//       path += "about.html";
+//       res.statusCode = 200;
+//       break;
+//     case "/about-us":
+//       // this will redirect because it is part of the 300 error
+//       res.statusCode = 301;
+//       res.setHeader("Location", "/about");
+//       res.end();
+//       break;
+//     default:
+//       path += "404.html";
+//       res.statusCode = 404;
+//   }
 
-  // send html
-  // this will log the error if there is one or not
-  fs.readFile(path, (err, data) => {
-    if (err) {
-      console.log(err);
-      res.end();
-    }
-    //res.write(data);
-    res.end(data);
-  });
-});
+//   // send html
+//   // this will log the error if there is one or not
+//   fs.readFile(path, (err, data) => {
+//     if (err) {
+//       console.log(err);
+//       res.end();
+//     }
+//     //res.write(data);
+//     res.end(data);
+//   });
+// });
 
-// localhost is the default value for 2nd argument
-server.listen(3000, "localhost", () => {
-  console.log("listening for requests on port 3000");
-});
+// // localhost is the default value for 2nd argument
+// server.listen(3000, "localhost", () => {
+//   console.log("listening for requests on port 3000");
+// });
