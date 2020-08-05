@@ -78,6 +78,19 @@ app.get("/blogs/:id", (req, res) => {
     });
 });
 
+app.delete("/blogs/:id", (req, res) => {
+  const id = req.params.id;
+  // this is where we find thid
+  Blog.findByIdAndDelete(id)
+    .then((result) => {
+      // sending data via json to the browser
+      res.json({ redirect: "/blogs" });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 // 404 page
 app.use((req, res) => {
   res.status(404).render("404", { title: "404" });

@@ -9,6 +9,7 @@
       <div class="content">
         <p><%= blog.body %></p>
       </div>
+      <!-- the data is a custom attribute that we can use -->
       <a class="delete" data-doc="<%= blog._id %>">delete</a>
     </div>
 
@@ -17,11 +18,13 @@
     <script>
       const trashcan = document.querySelector("a.delete");
       trashcan.addEventListener("click", (e) => {
+        //   this will set the endpoint to go
         const endpoint = `/blogs/${trashcan.dataset.doc}`;
         fetch(endpoint, {
           method: "DELETE",
         })
           .then((response) => response.json())
+          //this will redirectus to the beginig
           .then((data) => (window.location.href = data.redirect))
           .catch((err) => console.log(err));
       });
