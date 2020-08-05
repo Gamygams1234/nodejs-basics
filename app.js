@@ -19,8 +19,9 @@ mongoose
 
 app.set("view engine", "ejs");
 
-// middleware and static
 app.use(express.static("public"));
+
+app.use(express.urlencoded());
 app.use(morgan("dev"));
 
 //routes
@@ -49,6 +50,20 @@ app.get("/blogs", (req, res) => {
     });
 });
 
+// we are hadling a post now
+app.post("/blogs", (req, res) => {
+  // create an instance first
+  const blog = new Blog(req.body);
+
+  blog
+    .save()
+    .then((result) => {
+      res.redirect("/blogs");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 // 404 page
 app.use((req, res) => {
   res.status(404).render("404", { title: "404" });
