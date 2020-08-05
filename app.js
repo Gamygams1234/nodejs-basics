@@ -10,7 +10,10 @@ app.set("view engine", "ejs");
 // listen for requests
 app.listen(3000);
 
-// this will dictate what is logged to the console
+// this will let us use the static styles in the public
+app.use(express.static("public"));
+
+// this will dictate what is logged to the console and what format
 app.use(morgan("dev"));
 
 app.use((req, res, next) => {
