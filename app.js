@@ -64,6 +64,20 @@ app.post("/blogs", (req, res) => {
       console.log(err);
     });
 });
+
+// this will be getting our blogs by id
+app.get("/blogs/:id", (req, res) => {
+  const id = req.params.id;
+  Blog.findById(id)
+    .then((result) => {
+      // we are making a page called details
+      res.render("details", { blog: result, title: "Blog Details" });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 // 404 page
 app.use((req, res) => {
   res.status(404).render("404", { title: "404" });
