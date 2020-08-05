@@ -1,12 +1,14 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+// here we requrire all of our models as well
+const Blog = require("./models/blog");
 
 // express app
 const app = express();
 
 // connect to MONGO DB
-const dbURI = "mongodb+srv://gamyburgos:test1234@cluster0.rs42w.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const dbURI = "mongodb+srv://gamyburgos:test1234@cluster0.rs42w.mongodb.net/node-tuts?retryWrites=true&w=majority";
 
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -16,19 +18,52 @@ mongoose
 // register view view engine
 
 app.set("view engine", "ejs");
-// listen for requests
-// we can take the app.listen since it is being used by mongoose
-//app.listen(3000);
 
-// this will let us use the static styles in the public
+// middleware and static
 app.use(express.static("public"));
-
-// this will dictate what is logged to the console and what format
 app.use(morgan("dev"));
-
 app.use((req, res, next) => {
   res.locals.path = req.path;
   next();
+});
+
+// this will save an instance of the database
+app.get("/add-blog", (req, res) => {
+  const blog = new Blog({
+    title: "new blog 2",
+    snippet: "about my new blog",
+    body: "more about my new blog",
+  });
+
+  blog
+    .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.get("/all-blogs", (req, res) => {
+  Blog.find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.get("/single-blog", (req, res) => {
+  // this will hep us find by id
+  Blog.findById("5f2a6732d4118ce5cc46d133")
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.get("/", (req, res) => {
