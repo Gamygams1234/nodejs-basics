@@ -21,8 +21,8 @@ mongoose
 app.set("view engine", "ejs");
 
 app.use(express.static("public"));
-
-app.use(express.urlencoded());
+// make sure to put extended true
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 //routes
@@ -35,7 +35,7 @@ app.get("/about", (req, res) => {
 });
 
 //put the blog routes here
-app.use(blogRoutes);
+app.use("/blogs", blogRoutes);
 // 404 page
 app.use((req, res) => {
   res.status(404).render("404", { title: "404" });
